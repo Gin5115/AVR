@@ -117,13 +117,23 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Scroll functionality
     carousel.addEventListener('wheel', (e) => {
-        if (e.deltaY !== 0) {
-            e.preventDefault();
-            if (e.deltaX > 0 || e.deltaY > 0) {
-                nextBtn.click();
-            } else {
-                prevBtn.click();
-            }
+        const isScrollingRight = e.deltaX > 0 || e.deltaY > 0;
+        const isScrollingLeft = e.deltaX < 0 || e.deltaY < 0;
+
+        const atStart = currentIndex === 0;
+        const atEnd = currentIndex >= totalItems - itemsVisible;
+
+        // If trying to scroll past the boundaries, allow the page to scroll.
+        if ((isScrollingLeft && atStart) || (isScrollingRight && atEnd)) {
+            return;
+        }
+
+        // Otherwise, prevent page scroll and move the carousel.
+        e.preventDefault();
+        if (isScrollingRight) {
+            nextBtn.click();
+        } else if (isScrollingLeft) {
+            prevBtn.click();
         }
     }, { passive: false });
 
