@@ -3,6 +3,7 @@
  * 1. Toggling the mobile navigation menu.
  * 2. Toggling the light/dark theme and saving the user's preference.
  * 3. Powering the testimonial carousel with swipe and scroll functionality.
+ * 4. Animating elements into view as the user scrolls.
  */
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -70,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const updateCarousel = () => {
+      if (items.length === 0) return;
       const itemWidth = items[0].offsetWidth;
       const gap = parseInt(window.getComputedStyle(carousel).gap);
       const totalWidth = itemWidth + gap;
@@ -145,5 +147,36 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial setup
     updateItemsVisible();
     updateCarousel();
+  }
+
+  // --- Scroll Reveal Animation ---
+  // Select all elements that should fade in
+  const fadeInElements = document.querySelectorAll('.fade-in-element');
+
+  if (fadeInElements.length > 0) {
+    // Set up the Intersection Observer
+    const observerOptions = {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px',
+      threshold: 0.1 // Trigger when 10% of the element is visible
+    };
+
+    const observerCallback = (entries, observer) => {
+      entries.forEach(entry => {
+        // If the element is intersecting (visible)
+        if (entry.isIntersecting) {
+          // Add the 'is-visible' class to trigger the animation
+          entry.target.classList.add('is-visible');
+          // Stop observing the element so the animation only happens once
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+
+    // Create a new observer
+    const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe each of the fade-in elements
+    fadeInElements.forEach(el => scrollObserver.observe(el));
   }
 });
