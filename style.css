@@ -284,6 +284,9 @@ html.dark-mode .theme-toggle .fa-moon { display: none; }
 }
 
 @media (max-width: 767px) {
+    .testimonial-carousel-wrapper {
+        padding: 0;
+    }
     .carousel-btn {
         display: none; /* Hide buttons on mobile where swipe is primary */
     }
