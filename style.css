@@ -91,13 +91,18 @@ header nav.container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 1rem; padding-bottom: 1rem;
+  padding-top: 0.5rem; 
+  padding-bottom: 0.5rem;
 }
 .logo {
   font-size: 1.5rem; font-weight: 700;
   color: var(--header-logo-color);
   text-decoration: none;
   transition: color 0.3s ease;
+}
+.logo img {
+  height: 60px; /* You can change this value to make the logo bigger or smaller */
+  width: auto; /* Maintains the logo's proportions */
 }
 .nav-links { display: none; }
 .nav-links a {
@@ -420,3 +425,5 @@ footer .container { text-align: center; }
   opacity: 1;
   transform: translateY(0);
 }
+
+
